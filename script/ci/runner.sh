@@ -50,4 +50,6 @@ export CI_SEED=$(git rev-parse HEAD | tr -d 'a-z' | cut -b 1-5 | tr -d '0')
 # by rails assets:precompile
 export OPENPROJECT_CLI_PROXY=''
 
+bin/rails db:migrate RAILS_ENV=test
+
 bundle exec rspec spec/models/user_spec.rb
