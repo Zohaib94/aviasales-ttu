@@ -30,9 +30,9 @@
 require 'spec_helper'
 
 describe Setting, type: :model do
-  # OpenProject specific defaults that are set in settings.yml
-  describe "OpenProject's default settings" do
-    it 'has OpenProject as application title' do
+  # AviaSales specific defaults that are set in settings.yml
+  describe "AviaSales's default settings" do
+    it 'has AviaSales as application title' do
       expect(Setting.app_title).to eq 'AviaSales'
     end
 
