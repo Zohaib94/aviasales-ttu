@@ -46,17 +46,17 @@ install_plugins() {
 		echo "Installing plugins..."
 		bundle install
 
-		echo "Installing frontend dependencies..."
-		pushd $APP_PATH/frontend >/dev/null
-		if [ "$(id -u)" = '0' ]; then
-			su - $APP_USER -c "cd $APP_PATH/frontend && npm install"
-		else
-			npm install
-		fi
-		popd >/dev/null
+		# echo "Installing frontend dependencies..."
+		# pushd $APP_PATH/frontend >/dev/null
+		# if [ "$(id -u)" = '0' ]; then
+		# 	su - $APP_USER -c "cd $APP_PATH/frontend && npm install"
+		# else
+		# 	npm install
+		# fi
+		# popd >/dev/null
 
-		echo "Precompiling new assets..."
-		bundle exec rake assets:precompile
+		# echo "Precompiling new assets..."
+		# # bundle exec rake assets:precompile
 
 		echo "Plugins installed"
 	fi

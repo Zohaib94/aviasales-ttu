@@ -77,15 +77,5 @@ run() {
   eval $2;
 }
 
-run "chmod 777 frontend/scripts/link_plugin_placeholder.js"
-
 run "bundle exec rake db:migrate"
-
-run "for i in {1..3}; do npm install && break || sleep 15; done"
-
-run "bundle exec rake assets:precompile"
-
-run "bundle exec rake assets:clean"
-
-run "cp -rp config/frontend_assets.manifest.json public/assets/frontend_assets.manifest.json"
 
