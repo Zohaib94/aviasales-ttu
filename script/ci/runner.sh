@@ -38,6 +38,8 @@
 
 set -e
 
+run "chmod 777 frontend/scripts/link_plugin_placeholder.js"
+
 if [ "$4" = "bim" ]; then
   export OPENPROJECT_EDITION="$4";
 else
@@ -50,4 +52,13 @@ export CI_SEED=$(git rev-parse HEAD | tr -d 'a-z' | cut -b 1-5 | tr -d '0')
 # by rails assets:precompile
 export OPENPROJECT_CLI_PROXY=''
 
-bundle exec rspec spec/models/user_spec.rb
+case "$1" in
+        npm)
+            cd frontend && npm run test
+            ;;
+        plugins:cucumber)
+            bundle exec rake parallel:$1 -- --group-number $2 --only-group $3
+            ;;
+        *)
+            bundle exec rake parallel:$1 -- --group-number $2 --only-group $3 --seed $CI_SEED
+esac
