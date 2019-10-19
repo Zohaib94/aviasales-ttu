@@ -44,4 +44,43 @@ describe Setting, type: :model do
       expect(Setting.login_required?).to be_falsey
     end
   end
+
+  describe 'language can be updated to Russian' do
+    context "setting doesn't exist in the database" do
+      before do
+        Setting.default_language = 'ru'
+      end
+
+      it 'sets the setting' do
+        expect(Setting.default_language).to eq 'ru'
+      end
+
+      it 'stores the setting' do
+        expect(Setting.find_by(name: 'default_language').value).to eq 'ru'
+      end
+
+      after do
+        Setting.find_by(name: 'default_language').destroy
+      end
+    end
+
+    context 'setting already exist in the database' do
+      before do
+        Setting.default_language = 'en'
+        Setting.default_language = 'ru'
+      end
+
+      it 'sets the setting' do
+        expect(Setting.default_language).to eq 'ru'
+      end
+
+      it 'stores the setting' do
+        expect(Setting.find_by(name: 'default_language').value).to eq 'ru'
+      end
+
+      after do
+        Setting.find_by(name: 'default_language').destroy
+      end
+    end
+  end
 end
