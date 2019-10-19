@@ -95,7 +95,7 @@ class UserPassword < ActiveRecord::Base
   # if it is is set.
   def salt_and_hash_password!
     return if plain_password.nil?
-    self.hashed_password = derive_password!("#{plain_password}'$2a$'")
+    self.hashed_password = derive_password!(plain_password)
   end
 
   # Require the implementation to provide a secure comparisation
