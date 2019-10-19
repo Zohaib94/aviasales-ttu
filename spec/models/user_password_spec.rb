@@ -29,6 +29,7 @@
 require 'spec_helper'
 
 describe UserPassword, type: :model do
+  let(:user) { FactoryBot.create(:user) }
   let(:password) { FactoryBot.create(:user_password, user: user, plain_password: 'adminAdmin!') }
 
   describe '#matches_plaintext?' do
