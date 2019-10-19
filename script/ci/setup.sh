@@ -52,12 +52,14 @@ else
 fi
 
 # run migrations for mysql or postgres
-run "bundle exec rake db:migrate"
+if [ $1 != 'npm' ]; then
+  run "bundle exec rake db:migrate"
+fi
 
-# if [ $1 = 'npm' ]; then
-#   run "for i in {1..3}; do npm install && break || sleep 15; done"
-#   echo "No asset compilation required"
-# fi
+if [ $1 = 'npm' ]; then
+  run "for i in {1..3}; do npm install && break || sleep 15; done"
+  echo "No asset compilation required"
+fi
 
 if [ $1 = 'units' ]; then
   # Install pandoc for testing textile migration
@@ -65,8 +67,13 @@ if [ $1 = 'units' ]; then
   run "sudo apt-get install -qq pandoc"
 fi
 
+if [ ! -f "public/assets/frontend_assets.manifest.json" ]; then
+  if [ -z "${RECOMPILE_ON_TRAVIS_CACHE_ERROR}" ]; then
+    echo "ERROR: asset manifest was not properly cached. exiting"
+    exit 1
+  else
+    run "bash $(dirname $0)/cache_prepare.sh"
+  fi
+fi
 
-run "bash $(dirname $0)/cache_prepare.sh"
-
-
-#run "cp -rp public/assets/frontend_assets.manifest.json config/frontend_assets.manifest.json"
+run "cp -rp public/assets/frontend_assets.manifest.json config/frontend_assets.manifest.json"
