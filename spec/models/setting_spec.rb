@@ -30,4 +30,18 @@
 require 'spec_helper'
 
 describe Setting, type: :model do
+  # OpenProject specific defaults that are set in settings.yml
+  describe "OpenProject's default settings" do
+    it 'has OpenProject as application title' do
+      expect(Setting.app_title).to eq 'AviaSales'
+    end
+
+    it 'allows users to register themselves' do
+      expect(Setting.self_registration?).to be_truthy
+    end
+
+    it 'allows anonymous users to access public information' do
+      expect(Setting.login_required?).to be_falsey
+    end
+  end
 end
