@@ -29,4 +29,22 @@
 require 'spec_helper'
 
 describe UserPassword, type: :model do
+  let(:password) { FactoryBot.create(:user_password, user: user, plain_password: 'adminAdmin!') }
+
+  describe '#matches_plaintext?' do
+    it 'still matches the password' do
+      expect(password).to be_a(UserPassword.active_type)
+      expect(password.matches_plaintext?('adminAdmin!')).to be_truthy
+    end
+  end
+
+  describe '#save' do
+    let(:password) { FactoryBot.build(:user_password) }
+
+    it 'saves correctly' do
+      expect(password).to receive(:salt_and_hash_password!).and_call_original
+      expect { password.save! }.not_to raise_error
+      expect(password).not_to be_expired
+    end
+  end
 end
