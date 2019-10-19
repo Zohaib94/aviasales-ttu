@@ -63,7 +63,7 @@ additional_footer_content:
   default: ''
 # The instance name
 app_title:
-  default: OpenProject
+  default: AviaSales
 app_subtitle:
   default: Project management
 brute_force_block_minutes:
